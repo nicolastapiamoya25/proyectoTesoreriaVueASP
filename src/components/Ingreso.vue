@@ -416,7 +416,7 @@ export default {
                 console.log(error);
             });
         },
-        listarDetalle(id) {
+        listarDetalle(correlativo) {
             let me = this;
             let header = {
                 "Authorization": "Bearer " + this.$store.state.token
@@ -424,33 +424,13 @@ export default {
             let configuracion = {
                 headers: header
             };
-            axios.get('api/ProveedoresDetas/ListarDeta/' + id, configuracion).then(function (response) {
-                console.log(response);
-                me.detalles = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
+            axios.get('api/ProveedoresDetas/ListarDeta/' + correlativo, configuracion).then(function (response) {
 
-        buscarCodigo() {
-            let me = this;
-            me.errorArticulo = null;
-            let header = {
-                "Authorization": "Bearer " + this.$store.state.token
-            };
-            let configuracion = {
-                headers: header
-            };
-            axios.get('api/Articulos/BuscarCodigoIngreso/' + this.codigo, configuracion).then(function (response) {
-                //console.log(response);
-                me.agregarDetalle(response.data);
+                me.detalles = response.data;
+                console.log(response.data);
             }).catch(function (error) {
                 console.log(error);
-                me.errorArticulo = 'No existe el articulo';
             });
-        },
-        getSubtotal(cantidad, precio) {
-            return cantidad * precio;
         },
         agregarDetalle(data = []) {
             this.errorArticulo == null;
